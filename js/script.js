@@ -1,16 +1,35 @@
 // ===================================
-// Smooth Scroll to Offers Section
+// Phone Number Management
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
-    const buyNowBtn = document.getElementById('buyNowBtn');
-    const offersSection = document.getElementById('offersSection');
-    
-    if (buyNowBtn && offersSection) {
-        buyNowBtn.addEventListener('click', function() {
-            offersSection.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
+    const paymentPhoneInput = document.getElementById('paymentPhone');
+    const receivingPhoneInput = document.getElementById('receivingPhone');
+    const sameNumberCheckbox = document.getElementById('sameNumber');
+
+    // Handle same number checkbox
+    if (sameNumberCheckbox && paymentPhoneInput && receivingPhoneInput) {
+        // Initial state
+        receivingPhoneInput.disabled = sameNumberCheckbox.checked;
+        if (sameNumberCheckbox.checked) {
+            receivingPhoneInput.value = paymentPhoneInput.value;
+        }
+
+        // When checkbox changes
+        sameNumberCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                receivingPhoneInput.value = paymentPhoneInput.value;
+                receivingPhoneInput.disabled = true;
+            } else {
+                receivingPhoneInput.disabled = false;
+                receivingPhoneInput.focus();
+            }
+        });
+
+        // When payment phone changes and checkbox is checked
+        paymentPhoneInput.addEventListener('input', function() {
+            if (sameNumberCheckbox.checked) {
+                receivingPhoneInput.value = this.value;
+            }
         });
     }
 
@@ -24,8 +43,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const price = this.getAttribute('data-price');
             const packageName = this.getAttribute('data-package');
             
+            // Get phone numbers
+            const paymentPhone = paymentPhoneInput.value.trim();
+            const receivingPhone = receivingPhoneInput.value.trim() || paymentPhone;
+            
+            // Validate phone numbers
+            if (!paymentPhone || paymentPhone.length !== 10 || !/^[0-9]{10}$/.test(paymentPhone)) {
+                alert('Please enter a valid 10-digit M-PESA payment number');
+                paymentPhoneInput.focus();
+                return;
+            }
+            
+            if (!sameNumberCheckbox.checked && receivingPhone && (receivingPhone.length !== 10 || !/^[0-9]{10}$/.test(receivingPhone))) {
+                alert('Please enter a valid 10-digit receiving number');
+                receivingPhoneInput.focus();
+                return;
+            }
+            
             // Log to console for now (will be replaced with STK push later)
             console.log(`Buying Ksh ${price} offer - ${packageName}`);
+            console.log(`Payment Phone: ${paymentPhone}`);
+            console.log(`Receiving Phone: ${receivingPhone}`);
             
             // Visual feedback
             const originalText = this.textContent;
@@ -38,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.disabled = false;
                 
                 // Show alert for user feedback (temporary)
-                alert(`Order initiated!\n\nPackage: ${packageName}\nAmount: Ksh ${price}\n\nYou will receive an M-PESA prompt shortly.`);
+                alert(`Order initiated!\n\nPackage: ${packageName}\nAmount: Ksh ${price}\n\nPayment from: ${paymentPhone}\nReceiving on: ${receivingPhone}\n\nYou will receive an M-PESA prompt shortly.`);
             }, 1000);
         });
     });

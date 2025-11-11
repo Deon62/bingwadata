@@ -18,9 +18,42 @@
                 <span class="till-label">Till Number:</span>
                 <span class="till-value">4239478</span>
             </div>
-            <!-- <button class="btn-primary" id="buyNowBtn">Buy Data Now</button> -->
         </div>
     </header>
+
+    <!-- Phone Numbers Section -->
+    <section class="phone-section">
+        <div class="container">
+            <h3 class="phone-section-title">Enter Phone Numbers</h3>
+            <form class="phone-form" id="phoneForm">
+                <div class="form-group">
+                    <label for="paymentPhone">M-PESA Payment Number</label>
+                    <input 
+                        type="tel" 
+                        id="paymentPhone" 
+                        placeholder="0712345678" 
+                        required 
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="receivingPhone">Receiving Number</label>
+                    <input 
+                        type="tel" 
+                        id="receivingPhone" 
+                        placeholder="0712345678" 
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                    >
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="sameNumber" checked>
+                    <label for="sameNumber">Same number for receiving</label>
+                </div>
+            </form>
+        </div>
+    </section>
 
     <!-- Offers Section -->
     <section class="offers" id="offersSection">
