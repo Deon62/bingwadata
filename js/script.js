@@ -188,30 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showCopyFeedback(element) {
-        const originalBg = element.style.backgroundColor;
-        element.style.backgroundColor = 'rgba(16, 185, 129, 0.3)';
-        
-        const feedback = document.createElement('span');
-        feedback.textContent = '✓ Copied!';
-        feedback.style.cssText = `
-            position: absolute;
-            background: #10B981;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-left: 10px;
-            animation: fadeOut 2s ease;
-        `;
-        
-        element.style.position = 'relative';
-        element.appendChild(feedback);
-        
-        setTimeout(() => {
-            feedback.remove();
-            element.style.backgroundColor = originalBg;
-        }, 2000);
+        // Show toast notification
+        showToast('✅ Copied!', 'Till Number 4239478 copied to clipboard');
     }
 
     // ===================================

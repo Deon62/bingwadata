@@ -86,11 +86,20 @@ body {
 .till-number {
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 6px 16px;
     border-radius: var(--radius-sm);
     margin-bottom: 0;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.till-number:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.02);
 }
 
 .till-label {
@@ -103,6 +112,17 @@ body {
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
+}
+
+.copy-icon {
+    font-size: 1rem;
+    opacity: 0.8;
+    transition: transform 0.2s ease;
+}
+
+.till-number:hover .copy-icon {
+    transform: scale(1.2);
+    opacity: 1;
 }
 
 .btn-primary {
