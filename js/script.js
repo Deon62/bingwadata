@@ -75,11 +75,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.textContent = originalText;
                 this.disabled = false;
                 
-                // Show alert for user feedback (temporary)
-                alert(`Order initiated!\n\nPackage: ${packageName}\nAmount: Ksh ${price}\n\nPayment from: ${paymentPhone}\nReceiving on: ${receivingPhone}\n\nYou will receive an M-PESA prompt shortly.`);
-            }, 1000);
+                // Show toast notification
+                showToast(
+                    '🎉 Order Placed!',
+                    `${packageName} for Ksh ${price}. Check your phone for M-PESA prompt! 📱`
+                );
+            }, 800);
         });
     });
+
+    // ===================================
+    // Toast Notification Function
+    // ===================================
+    function showToast(title, message) {
+        // Remove existing toast if any
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <span class="toast-icon">✨</span>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 400);
+        }, 3000);
+    }
 
     // ===================================
     // Add Entrance Animation on Scroll
